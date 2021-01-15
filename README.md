@@ -2,10 +2,10 @@
 ## This repo public and free to use!
 ### you are more than welcome to look around and suggest suggestions for code.
 
-practice 1 - 3 are the very first steps of python:
-The basics of operators:
 
-# Python Arithmetic Operators
+# The basics of operators:
+
+## Python Arithmetic Operators
  
 Operator | Name | Example 
 | --- | --- | --- |   
@@ -18,7 +18,7 @@ Operator | Name | Example
 | // | Floor division | x // y |
 
 
-# Python Assignment Operators
+## Python Assignment Operators
 
 |Operator|Example| Same As|
 |---|---|---|
@@ -36,7 +36,7 @@ Operator | Name | Example
 |>>=|x >>= 3|x = x >> 3	
 |<<=|x <<= 3|x = x << 3
 
-# Python Comparison Operators
+## Python Comparison Operators
 
 |Operator|Name|Example|
 |---|---|---|
@@ -47,7 +47,7 @@ Operator | Name | Example
 |>=|Greater than or equal to| x >= y|
 |<=|Less than or equal to|x <= y|
 
-# Python Logical Operators
+## Python Logical Operators
 
 |Operator|Name|Example|
 |---|---|---|
