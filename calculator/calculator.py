@@ -1,6 +1,5 @@
 """
 Write a simple calculator program.
-
 The agenda is to build a menu which have 5 choices:
 0) Exit
 1) Addition
@@ -9,13 +8,12 @@ The agenda is to build a menu which have 5 choices:
 4) Division
 """
 
-user_input= -1
+user_input = -1
 while user_input != 0:
     print("Welcome, Please make you choice: \n0) Exit\n1) Addition\n2) Subtraction\n3) Multiplication\n4) Division")
-    user_input=int(input())
+    user_input = int(input())
     if user_input == 0:
         print("Bye!")
-
 
     if user_input == 1:
         print("you choose in Addition")
