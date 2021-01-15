@@ -1,13 +1,3 @@
-"""
-Write a simple calculator program.
-The agenda is to build a menu which have 5 choices:
-0) Exit
-1) Addition
-2) Subtraction
-3) Multiplication
-4) Division
-"""
-
 user_input = -1
 while user_input != 0:
     print("Welcome, Please make you choice: \n0) Exit\n1) Addition\n2) Subtraction\n3) Multiplication\n4) Division")

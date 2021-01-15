@@ -1,6 +1,3 @@
-"""
-Write a program to print all even numbers till you reach 1000
-"""
 
 n = int(input("Please enter a number:"))
 

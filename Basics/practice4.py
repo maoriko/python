@@ -1,10 +1,3 @@
-"""
-Write a program whom accepts 2 values from user:
-User want to enter to a roller coaster,
-his age must be between 8-18 and height myst ne above 115CM
-if the user is above 18 the height must be above 110CM
-"""
-
 print("Welcome to a very scary roller coaster\n"
       "if you are smaller then 8 you are not welcome\n"
       "if you above 8 and your height is above 115CM\n"

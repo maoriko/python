@@ -1,9 +1,5 @@
 """
-Write a program to get 2 values from user.
-A high value
-a low value
-print the whole range
-check if the higher value is bigger then the lower value and print accordingly
+
 """
 
 high_value = int(input("Please enter a value: \n"))
