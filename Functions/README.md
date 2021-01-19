@@ -11,3 +11,16 @@ the first param is high
 the second value is low
 print all values from the top to the lower 
 print only if the higher value is bigger then the lower. 
+
+
+## Exercise number3 
+Write a function whom gets 3 params:
+min
+max
+amount
+the function need to return an array in the len of the amount with random numbers from min 
+param
+
+with code execution:
+the program asks how many values to generate, min range and max range.
+call the function multiple times with different value.
