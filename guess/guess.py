@@ -1,6 +1,6 @@
 import random
 
-print("Welcome to the guess game! \nPlease Enter 2 numbers ")
+print("Welcome to the Guess game! \nPlease Enter 2 numbers and guess what is the number!")
 minVal = (int(input("Enter the low range: ")))
 maxVal = (int(input("Enter the max range: ")))
 
