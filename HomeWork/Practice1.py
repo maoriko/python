@@ -90,23 +90,6 @@ while True:
                 print("\n The number: ", user_input, "does not exist!, Try again")
                 break
             continue
-            # elif user_input in arr:
-            #
-            #     user_input=input("would you like to remove another?")
-
-            # if remove_item == True:
-            #     print("The number", remove_item, " successfully removed from the list\nWould you like to remove another?")
-            #     user_input = input("y / n")
-            #     if user_input == 'y':
-            #         continue
-
-            # elif i not in arr:
-            #     print("The number doesnt exist! try again...")
-            # else:
-            #
-            #     else:
-            #         print("not allowed!")
-            #         break
 
 # Display min Value
     if user_input == '3':
