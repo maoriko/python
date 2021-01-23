@@ -1,8 +1,10 @@
 """
+Practice 1
 Date: 22/01/2021
 Author: Maor Paz
 """
 import random
+
 arr = [0, 1000]
 
 
