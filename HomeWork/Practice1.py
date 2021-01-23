@@ -107,7 +107,7 @@ while True:
     if user_input == '5':
         i = len(arr)
         while i < maximum_func(arr):
-            print("The average numbe is:", maximum_func(arr) / i)
+            print("\nThe average numbe is:", maximum_func(arr) / i)
             break
 
     # Print all numbers within the list
