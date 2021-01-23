@@ -105,10 +105,10 @@ while True:
 
     # Average of the numbers
     if user_input == '5':
-        for i in arr:
-            i += 1
-            count = sum(arr)
-            print("The average is", count / i)
+        i = len(arr)
+        while i < maximum_func(arr):
+            print("The average numbe is:", maximum_func(arr) / i)
+            break
 
     # Print all numbers within the list
     if user_input == '6':
