@@ -130,8 +130,10 @@ while True:
     # Clear all the list and insert 500 random numbers
     if user_input == '9':
         print("Your list is cleared!")
-        arr = [random.randint(0, 501)]
-        i = 1
-        while i < 501:
-            print(i)
-            i += 1
+        arr=[]
+            for i in range(0,500):
+                n = random.randint(1,500)
+                arr.append(n)
+            print(arr)
+
+        
