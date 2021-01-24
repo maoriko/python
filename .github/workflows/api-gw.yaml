@@ -12,8 +12,10 @@ jobs:
   deployment:
     runs-on: 'ubuntu-latest'
     steps:
-#      - name: Helm Deploy
-#        uses: vimeda/helm@v1.6.1
+      - name: Install Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: v3.4.0
 
 #      - name: Checkout code staging
 #        uses: actions/checkout@v2
