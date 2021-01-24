@@ -26,4 +26,7 @@ jobs:
           path: akeyless-services-helm
           run: |
             helm &&
-            echo "I'm Alive"
+            echo "I'm Alive" &&
+            pwd &&
+            ls -la
+
