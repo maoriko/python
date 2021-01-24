@@ -12,8 +12,8 @@ jobs:
   deployment:
     runs-on: 'ubuntu-latest'
     steps:
-      - name: Helm Deploy
-        uses: vimeda/helm@v1.6.1
+#      - name: Helm Deploy
+#        uses: vimeda/helm@v1.6.1
 
 #      - name: Checkout code staging
 #        uses: actions/checkout@v2
