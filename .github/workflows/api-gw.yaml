@@ -24,9 +24,9 @@ jobs:
           repository: akeylesslabs/akeyless-services-helm
 #          ref: develop
           path: akeyless-services-helm
-          run: |
-            helm &&
-            echo "I'm Alive" &&
-            pwd &&
-            ls -la
+        run: |
+          helm &&
+          echo "I'm Alive" &&
+          pwd &&
+          ls -la
 
