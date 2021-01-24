@@ -1,0 +1,30 @@
+name: api-gw
+
+on: [deployment]
+
+#  workflow_dispatch:
+#  pull_request:
+#  push:
+#    branches:
+#      - develop
+
+jobs:
+  deployment:
+    runs-on: 'ubuntu-latest'
+    steps:
+#      - name: Helm Deploy
+#        uses: vimeda/helm@v1.6.1
+
+#      - name: Checkout code staging
+#        uses: actions/checkout@v2
+
+      - name: Checkout code akeyless-services-helm
+        uses: actions/checkout@v2
+        with:
+          repository: akeylesslabs/akeyless-services-helm
+#          ref: develop
+          path: akeyless-services-helm
+          run: |
+            cat /akeyless-services-helm/ &&
+            cat ./.helm/ &&
+            cat /
