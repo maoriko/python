@@ -17,8 +17,12 @@ jobs:
         with:
           version: v3.4.0
 
-#      - name: Checkout code staging
-#        uses: actions/checkout@v2
+
+      - name: Checkout code rabbitmq
+        uses: actions/checkout@v2
+#        with:
+#         run:
+
 
       - name: Checkout code akeyless-services-helm
         uses: actions/checkout@v2
@@ -26,9 +30,3 @@ jobs:
           repository: akeylesslabs/akeyless-services-helm
 #          ref: develop
           path: akeyless-services-helm
-          run: |
-            helm &&
-            echo "I'm Alive" &&
-            pwd &&
-            ls -la
-
