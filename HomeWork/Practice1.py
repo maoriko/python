@@ -5,7 +5,7 @@ Author: Maor Paz
 """
 import random
 
-arr = [0, 1000]
+arr = [0, 1000, 200]
 
 
 # Define the Maximum function
@@ -24,6 +24,13 @@ def minimum_func(nums):
         if i < my_min:
             my_min = i
     return my_min
+
+
+def unique(l, num):
+    if num not in l:
+        l.append(num)
+
+    return l
 
 
 while True:
@@ -64,17 +71,19 @@ while True:
             if ask == 'y':
                 arr.append(user_input)
                 print("\nA number", user_input, "added to your list:", arr)
-            elif ask != 'y':
+
+            user_input = input("\nWould you like to add another? y/n ")
+            if user_input == 'y':
+                continue
+            elif user_input == 'n':
+                break
+            elif ask != 'y' or ask != 'n':
                 print("\nI don't know what to do, going to main menu!")
-                user_input = input("\nWould you like to add another? y/n ")
-                if user_input == 'y':
-                    continue
-                elif user_input == 'n':
-                    break
-                else:
-                    print("\nNot Allowed going to top")
-                    break
-        # else:
+                break
+            else:
+                print("\nNot Allowed going to top")
+                break
+
         print("\nReturning to main menu")
         continue
 
@@ -113,27 +122,29 @@ while True:
     # Print all numbers within the list
     if user_input == '6':
         i = 1
-        while maximum_func(arr) > i > minimum_func(arr):
+        while i < maximum_func(arr) and i not in arr:
             print(i)
             i += 1
 
     # Sort list min to max
     if user_input == '7':
         print("\nYou choose to sort you list from min to max\n")
-        print("Here is your sotred list", sorted(arr))
+        arr.sort()
+        print("\nHere is your sotred list min to max", arr)
 
     # Sort from max to min
     if user_input == '8':
-        print("\nYou choose to sort you list from max to min\n\n")
-        print(sorted(arr, reverse=True))
+        print("\nYou choose to sort you list from max to min")
+        arr.sort(reverse=True)
+        print("\nHere is your sotred list from max to min")
 
     # Clear all the list and insert 500 random numbers
+    # if user_input == '9':
     if user_input == '9':
         print("Your list is cleared!")
-        arr=[]
-            for i in range(0,500):
-                n = random.randint(1,500)
-                arr.append(n)
-            print(arr)
-
-        
+        arr = []
+        for i in range(0, 500):
+            n = random.randint(0, 500)
+            arr.append(n)
+            print(arr, end="")
+        continue
