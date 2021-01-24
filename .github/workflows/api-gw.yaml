@@ -25,7 +25,7 @@ jobs:
 #          ref: develop
           path: akeyless-services-helm
           run: |
-            helm &&
-            cat /akeyless-services-helm/ &&
-            cat ./.helm/ &&
-            cat /
+            helm
+#            cat /akeyless-services-helm/ &&
+#            cat ./.helm/ &&
+#            cat /
