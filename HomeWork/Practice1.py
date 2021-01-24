@@ -5,7 +5,7 @@ Author: Maor Paz
 """
 import random
 
-arr = [0, 1000, 200]
+arr = [0, 1000]
 
 
 # Define the Maximum function
