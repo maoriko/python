@@ -58,16 +58,17 @@ while True:
 
     # Add multiple numbers or 1
     if user_input == '1':
+
         while True:
             try:
-                user_input = int(input("\nAdd number in range 0-1000: "))
-                if user_input not in range(0, 1001):
-                    print("You tried to insert", user_input, "This is not allowed, Returning to main menu")
+                user_input = int(input("\nAdd in range 1-1000 to list: "))
+                if user_input not in range(0,1000):
+                    print("You tried to add,", user_input, "Which is not allowed here, Going to main menu ")
                     break
-
             except ValueError:
                 print("This is not allowed here!")
                 break
+
             print("You choose to insert", user_input, "to your list:", arr)
             ask = input("\nAre you sure you want to insert this number? y/n: ")
             if ask == 'y':
