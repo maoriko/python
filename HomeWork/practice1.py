@@ -62,7 +62,7 @@ while True:
         while True:
             try:
                 user_input = int(input("\nAdd in range 1-1000 to list: "))
-                if user_input not in range(0,1000):
+                if user_input not in range(0, 1000):
                     print("You tried to add,", user_input, "Which is not allowed here, Going to main menu ")
                     break
             except ValueError:
