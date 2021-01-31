@@ -17,7 +17,7 @@ def passGen():
     spec = int(input("How many symbols you want?: "))
     num = int(input("How many numbers you want?: "))
     letters = int(input("How many letters you want?: "))
-    c += upper + num + spec
+    c += upper + num + spec + letters
 
     new_password = ""
     for i in range(upper):
