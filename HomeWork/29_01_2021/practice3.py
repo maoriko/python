@@ -1,10 +1,10 @@
 import random
 
 s = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!#$%&'()*+, -./:;<=>?@[\]^_`{|}~"
-low_case = s[0:25]
-numbers = s[25:35]
-capital = s[35:60]
-special = s[60:]
+low_case = s[0:26]
+numbers = s[26:36]
+capital = s[36:62]
+special = s[62:]
 
 def message():
     print("Hello, here is a password generator. ")
@@ -17,7 +17,7 @@ def passGen():
     spec = int(input("How many symbols you want?: "))
     num = int(input("How many numbers you want?: "))
     letters = int(input("How many letters you want?: "))
-    c += upper + num + spec
+    c += upper + num + spec + letters
 
     new_password = ""
     for i in range(upper):
@@ -35,3 +35,5 @@ def passGen():
 
 
 message()
+
+
