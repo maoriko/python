@@ -22,6 +22,7 @@ def find_password_strength(password):
     strong_password = 7
     very_strong_password = 8
 
+
     if password_length < 6:
         password_length_score += 1
     while password_length in range(6, 8):
@@ -48,7 +49,7 @@ def find_password_strength(password):
     print(character_sum)
 
     password_strength += character_sum
-    print('Your passwords score was {}', password_strength)
+    print('Your passwords score was: ', password_strength)
 
     if weak_password <= password_strength < strong_password:
         print('Password strength is weak.')
