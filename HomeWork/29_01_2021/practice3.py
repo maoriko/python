@@ -35,6 +35,6 @@ def passGen():
     for i in range(password_length):
         final_password += password_string[random.randint(0, len(password_string) - 1)]
     print(final_password)
-
+    return final_password
 
 passGen()

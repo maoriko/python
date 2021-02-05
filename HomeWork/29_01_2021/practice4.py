@@ -23,19 +23,19 @@ def score_total(password):
             len_points += 3
             break
 
-    for i in passwd:
+    for i in password:
         if i in low_case:
             s_low += 1
             break
-    for i in passwd:
+    for i in password:
         if i in numbers:
             s_nums += 1
             break
-    for i in passwd:
+    for i in password:
         if i in capital:
             s_cap += 1
             break
-    for i in passwd:
+    for i in password:
         if i in special:
             s_special += 2
             break
