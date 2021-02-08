@@ -24,3 +24,8 @@ param
 with code execution:
 the program asks how many values to generate, min range and max range.
 call the function multiple times with different value.
+
+
+## calc_func
+Write a simple calculator with functions.
+The program will get 2 values from user and print to the screen.
