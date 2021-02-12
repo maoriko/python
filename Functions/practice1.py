@@ -3,7 +3,3 @@ def high_low(arr,num):
         print(arr.upper())
     elif num ==1:
         print(arr.lower())
-
-
-
-
