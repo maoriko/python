@@ -1,142 +1,174 @@
-from os import times
-import time
-
-user_name = input("To start create user name:")
-user_password = input("Create Password: ")
+from datetime import datetime, timedelta
 
 
-def user_check(user):
-    if user == user_name:
-        return True
-    else:
-        print("Wrong username!")
-        return None
+# --------------------------
+# Global Functions
+# --------------------------
 
 
-def user_pass(passwd):
-    if passwd == user_password:
-        return True
-    else:
-        print("Wrong password!")
-        return None
+def register():
+    username = input("Enter username: ")
+    password = input("Enter password: ")
+
+    user_dict = {'username': username, 'password': password}
+
+    return user_dict
+
+
+def login(user_dict):
+    username = input("Enter username: ")
+    if username == user_dict['username']:
+        password = input("Enter password: ")
+        if password == user_dict['password']:
+            return True
+
+    return False
+
+
+class ParkingLot:
+    def __init__(self):
+        self.lot = []
+        self.__price_ph = 15
+        self.__capacity = 10
+
+    def insert_car(self, new_car):
+        if len(self.lot) < self.__capacity:
+            self.lot.append(new_car)
+            return True
+        if len(self.lot) >= 0.8 * self.__capacity:
+            print("parking lot is over 80% full")
+        else:
+            print("lot is full")
+            return False
+
+    def remove_car(self, plate_to_remove):
+        for elem in self.lot:
+            if elem.get_plate() == plate_to_remove:
+                self.lot.remove(elem)
+                return True
+        return False
+
+    def get_price(self):
+        return self.__price_ph
+
+    def set_price(self, new_price):
+        self.__price_ph = new_price
+        return self.__price_ph
+
+    def get_capacity(self):
+        return self.__capacity
+
+    def set_capacity(self, new_space):
+        self.__capacity = new_space
+        return self.__capacity
+
+    def print_lot(self):
+        for elem in self.lot:
+            print(elem)
+            print()
+
+    def report_over_24(self):
+        over_24 = []
+        for elem in self.lot:
+            entry_time = elem.get_entry_time()
+            exit_time = datetime.now()
+            time_diff = exit_time - entry_time
+            if (time_diff.seconds // 3600) >= 24:
+                over_24.append(elem)
+
+        for i in over_24:
+            print(i)
 
 
 class Car:
-    def __init__(self, car_num=[]):
-        self.__car_num = car_num
 
-    def add_car(self, car_num_add):
-        for car_num_add in self.__car_num:
-            if car_num_add not in self.__car_num and car_num_add == 7:
-                self.__car_num.append(car_num_add)
-                return car_num_add
-            
-            elif car_num_add in self.__car_num:
-                print("The car number", car_num_add, "already exist!")
-                return car_num_add
+    def __init__(self, plate, car_type, phone):
+        self.plate = plate
+        self.car_type = car_type
+        self.phone = phone
+        self.entry_time = datetime.now()
 
-            elif car_num_add > 6:
-                print("You have too much numbers in the car section", car_num_add)
-                return car_num_add
+    def set_new_phone(self, new_phone):
+        self.phone = new_phone
 
-            elif car_num_add < 8:
-                print("you have less numbers in the car section", car_num_add)
-                return car_num_add
+    def get_plate(self):
+        return self.plate
 
-            break
+    def get_entry_time(self):
+        return self.entry_time
 
-        return car_num_add
-
-    def add_phone(self, phone_num_add):
-        if phone_num_add not in self.__car_num and phone_num_add == 10:
-            self.__car_num.append(phone_num_add)
-            return phone_num_add
-
-        elif phone_num_add in self.__car_num:
-            print("The phone number", phone_num_add, "already exist!")
-            return phone_num_add
-
-        elif phone_num_add > 10:
-            print("You have too much numbers in the phone section")
-            return phone_num_add
-
-        elif phone_num_add < 10:
-            print("you have less numbers in the phone section")
-            return phone_num_add
-
-        return phone_num_add
-
-    def car_type(self):
-        pass
-
-    def time_arrive(self):
-        pass
-
-    def print_car(self):
-        for i in self.__car_num:
-            if len(i) == 7:
-                print("car", i)
-            if len(i) == 10:
-                print("phone:", i)
+    def __str__(self):
+        return f"Plate: {self.plate}\nModel: {self.car_type}\nPhone: {self.phone}"
 
 
-class Parking_lot:
+def menu():
+    menu_dict = {
+        '1': "New Parking (Admin)",
+        '2': "Add Vehicle",
+        '3': "Remove Vehicle",
+        '4': "Change hourly price (Admin)",
+        '5': "Change lot capacity (Admin)",
+        '6': "Above 24 hours report",
+        '7': "Print all vehicles",
+        '0': "Quit"
+    }
+    for key, val in menu_dict.items():
+        print(f"{key}) {val}")
 
-    def __init__(self):
-        pass
+    return input('>>> ')
 
 
-while True:
-    print("\nWelcome, Here you can manage your parking lot\n"
-          "Please make your choice :\n"
-          "1) Initialize new parking (user name and password required)\n"
-          "2) Add new vehicle \n"
-          "3) Remove vehicle \n"
-          "4) Change price per hour (user name and password required)\n"
-          "5) Change vehicle capacity (user name and password required)\n"
-          "6) print all vehicles above 24 hour\n"
-          "7) print all vehicles in the parking lot\n"
-          "8) exit")
+def get_car():
+    while True:
+        car_plate = input("Enter plate number: ")
+        car_type = input("Enter type: ")
+        car_phone = input("Enter phone number: ")
+        try:
+            car = Car(plate=car_plate, car_type=car_type, phone=car_phone)
+            return car
+        except Exception as e:
+            print("Oops, there is an error in one or more of the inputs")
+            print("Error:", e)
+            continue
 
-    user_menu = int(input(""))
 
-    if user_menu == 1:
-        temp_user = input("Please type your username: ")
-        temp_passwd = input("Please type your password: ")
+if __name__ == '__main__':
+    parking = ParkingLot()  # creating initial parking lot
+    users = register()
 
-        if user_check(temp_user) and user_pass(temp_passwd):
-            try:
-                enter_car = int(input("Add car number by 7 numbers long "))
-                # enter_phone = int(input("Add phone number by 10 numbers long "))
-                c = Car()
-                c.add_car(enter_car)
-                # c.add_phone(enter_phone)
-                c.print_car()
+    while True:
+        choice = menu()
 
-            except ValueError:
-                print("Only numbers allowed here")
-                break
+        if choice == '1':
+            if login(users):
+                parking = ParkingLot()  # creating new parking lot
+            else:
+                print("Invalid username or password\n")
 
-    elif user_menu == 2:
-        pass
+        elif choice == '2':
+            car = get_car()
+            print(car.get_entry_time())
+            parking.insert_car(car)
 
-    elif user_menu == 3:
-        pass
+        elif choice == '3':
+            plate_to_remove = input("Enter plate to remove: ")
+            parking.remove_car(plate_to_remove)
 
-    elif user_menu == 4:
-        pass
+        elif choice == '4':
+            if login(users):
+                user_price = input("What is the new price? ")
+                parking.set_price(user_price)
 
-    elif user_menu == 5:
-        pass
+        elif choice == '5':
+            if login(users):
+                user_lot = input("What is the new price? ")
+                parking.set_capacity(user_lot)
 
-    elif user_menu == 6:
-        pass
+        elif choice == '6':
+            parking.report_over_24()
 
-    elif user_menu == 7:
-        pass
+        elif choice == '7':
+            parking.print_lot()
 
-    elif user_menu == 8:
-        exit("Bye!")
-
-# self.car_num.append(phone_num_add)
-# return phone_num_add
+        elif choice == '8':
+            exit("Bye!")
