@@ -110,7 +110,7 @@ def menu():
         '5': "Change lot capacity (Admin)",
         '6': "Above 24 hours report",
         '7': "Print all vehicles",
-        '0': "Quit"
+        '8': "Quit"
     }
     for key, val in menu_dict.items():
         print(f"{key}) {val}")
