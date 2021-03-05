@@ -8,13 +8,13 @@ def cipher_encrypt(to_encrypt: str, key: int):
     for c in to_encrypt:
         if c.isupper():
             c_index = ord(c) - ord('A')
+
             # shift the current character by key positions
             c_shifted = (c_index + key) % 26 + ord('A')
             c_new = chr(c_shifted)
             encrypted += c_new
 
         elif c.islower():
-
             # subtract the unicode of 'a' to get index in [0-25) range
             c_index = ord(c) - ord('a')
             c_shifted = (c_index + key) % 26 + ord('a')
@@ -23,7 +23,6 @@ def cipher_encrypt(to_encrypt: str, key: int):
 
         else:
             encrypted += c
-
     return encrypted
 
 
@@ -48,7 +47,6 @@ def cipher_decrypt(decrypted_value: str, key: int):
         else:
             # if its neither alphabetical nor a number, just leave it like that
             decrypted_value += c
-
     return decrypted_value
 
 
@@ -61,18 +59,14 @@ def cipher_decrypt(decrypted_value: str, key: int):
 def cipher_using_lookup(text, key, characters=string.ascii_lowercase, decrypt=False):
     if key < 0:
         print("key cannot be negative")
-
         return None
 
     n = len(characters)
 
     if decrypt == True:
         key = n - key
-
     table = str.maketrans(characters, characters[key:] + characters[:key])
-
     translated_text = text.translate(table)
-
     return translated_text
 
 
@@ -104,8 +98,8 @@ def fileCipher(fileName, outputFileName, key=3, decrypt=False):
     print("The file {} has been translated successfully and saved to {}".format(fileName, outputFileName))
 
 
-inputFile = pathlib.Path("milky_way.txt")
+inputFile = pathlib.Path("some_text_to_encrypt.txt")
 
-outputFile = pathlib.Path("milky_way_encrypted.txt")
+outputFile = pathlib.Path("some_text_encrypted.txt")
 
 fileCipher(inputFile, outputFile, key=3, decrypt=False)
