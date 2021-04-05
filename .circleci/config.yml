@@ -11,7 +11,9 @@ jobs:
       - checkout # check out the code in the project directory
       - run:
           name: Authenticate to Akeyless
-          command: akeyless auth --admin-email $admin_email --admin-password $admin_password
-      - run:
-          name: Fetch Secret
-          command: echo "mysecret=[$mysecret]" && echo "demo_secret=[$demo_secret]"
+          command: |
+            echo $admin_email
+#          command: akeyless auth --admin-email $admin_email --admin-password $admin_password
+#      - run:
+#          name: Fetch Secret
+#          command: echo "mysecret=[$mysecret]" && echo "demo_secret=[$demo_secret]"
