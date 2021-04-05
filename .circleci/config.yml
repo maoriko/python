@@ -5,7 +5,7 @@ jobs:
       - image: akeyless/ci_base
     environment:
       mysecret: akeyless://MySecret1
-      demo_secret: akeyless://api-gw
+#      demo_secret: akeyless://api-gw
       BASH_ENV: ~/.bashrc
     steps:
       - checkout # check out the code in the project directory
@@ -14,4 +14,5 @@ jobs:
           command: akeyless auth --admin-email $admin_email --admin-password $admin_password
       - run:
           name: Fetch Secret
-          command: echo "mysecret=[$mysecret]" && echo "demo_secret=[$demo_secret]"
+#          command: echo "demo_secret=[$demo_secret]"
+          command: echo "mysecret=[$mysecret]"
