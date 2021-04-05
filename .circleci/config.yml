@@ -12,9 +12,8 @@ jobs:
       - run:
           name: Authenticate to Akeyless
           command: |
-            echo $admin_email
             akeyless auth --admin-email $admin_email --admin-password $admin_password
+      - run:
+          name: Fetch Secret
+          command: |
             echo "mysecret=[$mysecret]" && echo "demo_secret=[$demo_secret]"
-#      - run:
-#          name: Fetch Secret
-#          command: echo "mysecret=[$mysecret]" && echo "demo_secret=[$demo_secret]"
