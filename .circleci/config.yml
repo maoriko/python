@@ -6,14 +6,9 @@ jobs:
     environment:
       mysecret: akeyless://MySecret1
       demo_secret: akeyless://api-gw
-      BASH_ENV: ~/.bashrc
+      - BASH_ENV: ~/.bashrc
     steps:
       - checkout # check out the code in the project directory
-      - run:
-          name: "Export environment variables"
-          command: |
-            export mysecret
-            export demo_secret
       - run:
           name: Authenticate to Akeyless
           command: akeyless auth --admin-email $admin_email --admin-password $admin_password
