@@ -1,11 +1,21 @@
-akeyless:
-  image:
-    name: akeyless/ci_base:maor
-  before_script:
-    - export DEMO_SECRET=akeyless://api-gw
-    - export MY_SECRET=akeyless://MySecret1
-    - akeyless auth --access-id p-y1huzwwwh9qj --access-type jwt --jwt $CI_JOB_JWT
-#    - source ~/.akeyless/akeyless_env.sh
-  script:
-    - echo "Secret=[$DEMO_SECRET]"
-    - echo "Fetching Secrets is Easy [$MY_SECRET]"
+version: 2.1
+
+orbs:
+  python: circleci/python@0.2.1
+
+jobs:
+  build-and-test:
+    executor: python/default
+    steps:
+      - checkout
+      - python/load-cache
+      - python/install-deps
+      - python/save-cache
+      - run:
+          command: ./manage.py test
+          name: Test
+
+workflows:
+  main:
+    jobs:
+      - build-and-test
