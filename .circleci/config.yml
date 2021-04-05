@@ -6,7 +6,7 @@ jobs:
     environment:
       mysecret: akeyless://MySecret1
       demo_secret: akeyless://api-gw
-      - BASH_ENV: ~/.bashrc
+      BASH_ENV: ~/.bashrc
     steps:
       - checkout # check out the code in the project directory
       - run:
