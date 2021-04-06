@@ -21,4 +21,4 @@ jobs:
       - run:
           name: Fetch Secret
           command: |
-            echo "mysecret=[$mysecret]" && echo "demo_secret=[$demo_secret]"
+            echo "$mysecret" && echo "$demo_secret"
