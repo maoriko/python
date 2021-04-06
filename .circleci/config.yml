@@ -12,8 +12,8 @@ jobs:
       - run:
           name: Export environment variables
           command: |
-            export mysecret='akeyless://MySecret1'
-            export demo_secret ='akeyless://api-gw'
+            echo 'export mysecret="akeyless://MySecret1"' >> $BASH_ENV
+            echo 'export demo_secret="akeyless://api-gw"' >> $BASH_ENV
       - run:
           name: Authenticate to Akeyless
           command: |
