@@ -14,6 +14,7 @@ jobs:
           command: |
             echo 'export mysecret="$mysecret"' >> $BASH_ENV
             echo 'export demo_secret="akeyless://api-gw"' >> $BASH_ENV
+            source $BASH_ENV
             akeyless auth --admin-email $admin_email --admin-password $admin_password
       - run:
           name: Source Akeyless ENV
