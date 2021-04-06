@@ -14,7 +14,7 @@ jobs:
           command:
             akeyless auth --access-id p-y1huzwwwh9qj --access-type jwt --jwt $CI_JOB_JWT
 #            akeyless auth --admin-email $admin_email --admin-password $admin_password
-            echo "mysecret=[$mysecret]" && echo "demo_secret=[$demo_secret]"
+#            echo "mysecret=[$mysecret]" && echo "demo_secret=[$demo_secret]"
 #      - run:
 #          name: Fetch Secret
 #          command: |
