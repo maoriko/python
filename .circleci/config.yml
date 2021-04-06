@@ -6,20 +6,22 @@ jobs:
     environment:
       mysecret: akeyless://MySecret1
       demo_secret: akeyless://api-gw
-      BASH_ENV: /etc/profile
+#      BASH_ENV: /etc/profile
     steps:
       - checkout # check out the code in the project directory
       - run:
           name: Authenticate to Akeyless
           command: |
-            echo 'export mysecret="$mysecret"' >> $BASH_ENV
-            echo 'export demo_secret="akeyless://api-gw"' >> $BASH_ENV
-            source $BASH_ENV
             akeyless auth --admin-email $admin_email --admin-password $admin_password
-      - run:
-          name: Source Akeyless ENV
-          command: |
             source ~/.akeyless/akeyless_env.sh
+            echo 'export mysecret="${mysecret}"' >> $BASH_ENV
+            echo 'export demo_secret="${demo_secret}"' >> $BASH_ENV
+            source $BASH_ENV
+#
+#      - run:
+#          name: Source Akeyless ENV
+#          command: |
+#            source ~/.akeyless/akeyless_env.sh
       - run:
           name: Fetch Secret
           command: echo "mysecret=[$mysecret]" && echo "demo_secret=[$demo_secret]"
