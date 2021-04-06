@@ -10,12 +10,15 @@ jobs:
     steps:
       - checkout # check out the code in the project directory
       - run:
+          name: Export environment variables
+          command: |
+            export mysecret='akeyless://MySecret1'
+            export demo_secret ='akeyless://api-gw'
+      - run:
           name: Authenticate to Akeyless
-          command:
-            akeyless auth --access-id p-y1huzwwwh9qj --access-type jwt --jwt $CI_JOB_JWT
-#            akeyless auth --admin-email $admin_email --admin-password $admin_password
-#            echo "mysecret=[$mysecret]" && echo "demo_secret=[$demo_secret]"
-#      - run:
-#          name: Fetch Secret
-#          command: |
-#            echo "mysecret=[$mysecret]" && echo "demo_secret=[$demo_secret]"
+          command: |
+            akeyless auth --admin-email $admin_email --admin-password $admin_password
+      - run:
+          name: Fetch Secret
+          command: |
+            echo "mysecret=[$mysecret]" && echo "demo_secret=[$demo_secret]"
