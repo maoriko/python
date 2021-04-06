@@ -11,11 +11,14 @@ jobs:
       - checkout # check out the code in the project directory
       - run:
           name: Authenticate to Akeyless
-          command: akeyless auth --admin-email $admin_email --admin-password $admin_password
+          command: |
+            echo 'export mysecret="$mysecret"' >> $BASH_ENV
+            echo 'export demo_secret="akeyless://api-gw"' >> $BASH_ENV
+            akeyless auth --admin-email $admin_email --admin-password $admin_password
       - run:
           name: Source Akeyless ENV
-          command: source ~/.akeyless/akeyless_env.sh
-
+          command: |
+            source ~/.akeyless/akeyless_env.sh
       - run:
           name: Fetch Secret
           command: echo "mysecret=[$mysecret]" && echo "demo_secret=[$demo_secret]"
