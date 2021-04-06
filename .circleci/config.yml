@@ -13,5 +13,9 @@ jobs:
           name: Authenticate to Akeyless
           command: akeyless auth --admin-email $admin_email --admin-password $admin_password
       - run:
+          name: Source Akeyless ENV
+          command: source ~/.akeyless/akeyless_env.sh
+
+      - run:
           name: Fetch Secret
           command: echo "mysecret=[$mysecret]" && echo "demo_secret=[$demo_secret]"
