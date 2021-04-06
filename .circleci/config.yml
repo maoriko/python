@@ -3,10 +3,10 @@ jobs:
   build:
     docker:
       - image: akeyless/ci_base:maor
-    environment:
-      mysecret: akeyless://MySecret1
-      demo_secret: akeyless://api-gw
-#      BASH_ENV: ~/.bashrc
+        environment:
+          mysecret: akeyless://MySecret1
+          demo_secret: akeyless://api-gw
+          BASH_ENV: ~/.bashrc
     steps:
       - checkout # check out the code in the project directory
       - run:
