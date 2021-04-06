@@ -6,12 +6,11 @@ jobs:
     environment:
       mysecret: akeyless://MySecret1
       demo_secret: akeyless://api-gw
-      AKEYKESS_API_GW_URL: akeyless://TEST
+      BASH_ENV: ~/.akeyless/akeyless_env.sh
     steps:
       - checkout # check out the code in the project directory
       - run:
           name: Authenticate to Akeyless
           command: |
             akeyless auth --admin-email $admin_email --admin-password $admin_password
-            source ~/.akeyless/akeyless_env.sh
-            echo "mysecret=[$mysecret]" && echo "demo_secret=[$demo_secret]" && echo "myencrypted=[$AKEYKESS_API_GW_URL]"
+            echo "mysecret=[$mysecret]" && echo "demo_secret=[$demo_secret]"
