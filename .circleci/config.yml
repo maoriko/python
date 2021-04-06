@@ -13,9 +13,6 @@ jobs:
           name: Authenticate to Akeyless
           command: |
             akeyless auth --admin-email $admin_email --admin-password $admin_password
-#            echo 'export mysecret="${mysecret}"' >> $BASH_ENV
-#            echo 'export demo_secret="${demo_secret}"' >> $BASH_ENV
-#            source $BASH_ENV
             source ~/.akeyless/akeyless_env.sh
             echo "mysecret=[$mysecret]" && echo "demo_secret=[$demo_secret]"
 #
