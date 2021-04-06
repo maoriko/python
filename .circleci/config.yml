@@ -1,30 +1,3 @@
-#version: 2.1
-#jobs:
-#  build:
-#    docker:
-#      - image: akeyless/ci_base
-#        environment:
-#          mysecret: akeyless://MySecret1
-#          demo_secret: akeyless://api-gw
-#          BASH_ENV: /etc/profile
-#    steps:
-#      - checkout # check out the code in the project directory
-#      - run:
-#          name: Authenticate to Akeyless
-#          command: |
-#            echo "$mysecret"
-#            akeyless auth --admin-email $admin_email --admin-password $admin_password
-#      - run:
-#          name: Export environment variables
-#          command: |
-#            echo 'export mysecret="$mysecret"' >> $BASH_ENV
-#            echo 'export demo_secret="akeyless://api-gw"' >> $BASH_ENV
-#      - run:
-#          name: Fetch Secret
-#          command: |
-#            echo "$mysecret" && echo "$demo_secret"
-#
-
 version: 2.1
 jobs:
   build:
