@@ -12,6 +12,7 @@ jobs:
       - run:
           name: Authenticate to Akeyless
           command: akeyless auth --admin-email $admin_email --admin-password $admin_password
+
       - run:
           name: Fetch Akeyless secrets
           command: echo "mysecret=[$mysecret]" && echo "demo_secret=[$demo_secret]"
