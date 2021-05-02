@@ -7,8 +7,8 @@ _USERS=$('dscl . list /Users | grep -v "^_"')
 echo "${_USERS}"
 
 for user in $_USERS; do
+  UHOME=/Users/"${_USERS}"
 	_dir="${UHOME}/${_USERS}"
-	UHOME=/Users/"${_USERS}"
 
 	if [ -d "$_dir" ]; then
 		cat << EOF > ~/.akeyless-sphere.rc
