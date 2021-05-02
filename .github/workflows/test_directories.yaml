@@ -1,6 +1,6 @@
 name: test_directories
 
-on: [push]
+on: [deployment]
 
 jobs:
   test_directories:
