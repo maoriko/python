@@ -1,7 +1,6 @@
 name: test_directories
 
 on:
-  deployment:
   pull_request:
   push:
     branches:
