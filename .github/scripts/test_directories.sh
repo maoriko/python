@@ -3,7 +3,7 @@
 set -e
 set -x
 
-_USERS='dscl . list /Users | grep -v "^_"'
+_USERS=$('dscl . list /Users | grep -v "^_"')
 echo "${_USERS}"
 
 for user in $_USERS; do
