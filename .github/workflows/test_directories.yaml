@@ -1,0 +1,15 @@
+name: test_directories
+
+on: [deployment]
+
+jobs:
+  test_directories:
+    if: github.event.deployment.task == 'test_directories'
+    name: test_directories
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create files
+        run: .github/scripts/test_directories.sh
