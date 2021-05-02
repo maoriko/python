@@ -1,28 +1,21 @@
 #!/bin/bash
-
 set -e
 set -x
-
-_USERS=$('dscl . list /Users | grep -v "^_"')
+_USERS=$(dscl . list /Users | grep -v "^_")
 echo "${_USERS}"
-
 for user in $_USERS; do
-  UHOME=/Users/"${_USERS}"
-	_dir="${UHOME}/${_USERS}"
-
-	if [ -d "$_dir" ]; then
-		cat << EOF > ~/.akeyless-sphere.rc
-		identity_file=""
-		cert_issuer_name="akeyless-zero-trust/staging/cert-issuer"
-		profile="akeyless-zero-trust"
-		BASTION_API_PROTO_=https
+        _dir=/Users/$user
+        if [ -d "$_dir" ]; then
+                cat << EOF > $_dir/.test-akeyless-sphere.rc
+                identity_file=""
+                cert_issuer_name="akeyless-zero-trust/staging/cert-issuer"
+                profile="akeyless-zero-trust"
+                BASTION_API_PROTO_=https
 EOF
-
-chmod 444 ~/"${UHOME}"/.akeyless-sphere.rc
-	fi
+chmod 444 $_dir/.test-akeyless-sphere.rc
+        fi
 done
-
-cat ~/"${UHOME}"/.akeyless-sphere.rc
+cat $_dir/.test-akeyless-sphere.rc
 
 
 #
