@@ -35,3 +35,4 @@ done
 
 cat  ~/"${UHOME}"/.akeyless/profiles/akeyless-zero-trust.toml
 cat ~/{"${UHOME}"}/.akeyless-sphere.rc
+
