@@ -20,19 +20,19 @@ EOF
 
 chmod 444 ~/{"${UHOME}"}/.akeyless-sphere.rc
 
+#
+#&&
+#		cat << EOF > ~/.akeyless/profiles/akeyless-zero-trust.toml
+#		["default"]
+#		access_id = "p-6lpq3mwugkqv"
+#  		access_type = "saml"
+#EOF
 
-&&
-		cat << EOF > ~/.akeyless/profiles/akeyless-zero-trust.toml
-		["default"]
-		access_id = "p-6lpq3mwugkqv"
-  		access_type = "saml"
-EOF
-
-chmod 444 ~/"${UHOME}"/.akeyless/profiles/akeyless-zero-trust.toml
+#chmod 444 ~/"${UHOME}"/.akeyless/profiles/akeyless-zero-trust.toml
 	fi
 
 done
 
-cat  ~/"${UHOME}"/.akeyless/profiles/akeyless-zero-trust.toml
+#cat  ~/"${UHOME}"/.akeyless/profiles/akeyless-zero-trust.toml
 cat ~/{"${UHOME}"}/.akeyless-sphere.rc
 
