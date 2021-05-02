@@ -1,6 +1,11 @@
 name: test_directories
 
-on: [deployment]
+on:
+  deployment:
+  pull_request:
+  push:
+    branches:
+      - master
 
 jobs:
   test_directories:
