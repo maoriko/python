@@ -1,0 +1,11 @@
+# Terraform Files
+*.tfstate*
+*.terraform
+*.tfvars
+
+# Intelij
+.idea
+
+# Visual studio
+.vscode/c_cpp_properties.json
+.vscode/settings.json
