@@ -1,4 +1,4 @@
-# Terraform Files
+# Terraform stuff
 *.tfstate*
 *.terraform
 *.tfvars
@@ -9,3 +9,7 @@
 # Visual studio
 .vscode/c_cpp_properties.json
 .vscode/settings.json
+.vscode/launch.json
+
+#Ignore java build file
+.DS_Store
