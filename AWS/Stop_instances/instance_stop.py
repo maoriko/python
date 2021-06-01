@@ -1,3 +1,8 @@
+"""
+Before running this script install boto3
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python3.9 get-pip.py
+"""
 import boto3
 
 # Define client connection
