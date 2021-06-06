@@ -1,6 +1,20 @@
 import boto3
 import csv
 
+
+class Color:
+    PURPLE = '\033[95m'
+    CYAN = '\033[96m'
+    DARKCYAN = '\033[36m'
+    BLUE = '\033[94m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+    END = '\033[0m'
+
+
 # Define client connection
 ec2c = boto3.client('ec2')
 
@@ -29,10 +43,6 @@ def lambda_handler(event, context):
         print("===========================================\n")
         reg = region['RegionName']
 
-        result.append({
-            'Region': region['RegionName']
-        })
-
         # Connect to region
         ec2r = boto3.resource('ec2', region_name=reg)
 
@@ -43,26 +53,28 @@ def lambda_handler(event, context):
         try:
             for reservation in response['Reservations']:
                 for instance in reservation['Instances']:
-                    print("\nInstance: " + instance['InstanceId'], "  Instance state: ", instance['State']['Name'])
+                    print(Color.BOLD + "\nInstanceID: " + Color.END + Color.BLUE + instance['InstanceId'] + Color.END +
+                          Color.BOLD + "  Instance state: " + Color.END + Color.GREEN + instance['State']['Name'] + Color.END)
                     for securityGroup in instance['SecurityGroups']:
                         result.append({
+                            'Region': region['RegionName'],
                             'InstanceId': instance['InstanceId'],
                             'InstanceType': instance['InstanceType'],
                             'InstanceState': instance['State']['Name'],
-                            'GroupId': securityGroup['GroupId'],
-                            'GroupName': securityGroup['GroupName']
+                            'SGroupId': securityGroup['GroupId'],
+                            'SGroupName': securityGroup['GroupName']
                         })
-
-                        print("SG ID: {}, Name: {}".format(securityGroup['GroupId'], securityGroup['GroupName']))
+                        print(Color.BOLD + "SecurityGroup ID: " + Color.END + Color.RED + securityGroup['GroupId'] + Color.END +
+                              Color.BOLD + "  SecurityGroup Name: " + Color.END + Color.PURPLE + securityGroup['GroupName'] + Color.END)
 
         except Exception as E:
             print(region, E)
             continue
+
         print("===========================================\n")
     print('Done.')
 
-    # 'region','ImageId', 'InstanceType', 'PublicIp', 'PrivateIp'
-    header = ['Region', 'InstanceId', 'InstanceType', 'InstanceState', 'GroupId', 'GroupName']
+    header = ['Region', 'InstanceId', 'InstanceType', 'InstanceState', 'SGroupId', 'SGroupName']
     with open('ec2-details.csv', 'w') as file:
         writer = csv.DictWriter(file, fieldnames=header)
         writer.writeheader()
