@@ -16,8 +16,8 @@ def get_tags(instances):
         if tag['Key'] == 'Name':
             instances_tags = tag['Value']
             return instances_tags
-        else:
-            return instances.id
+        # else:
+        #     return instances.id
 
 
 def lambda_handler(event, context):
@@ -82,7 +82,7 @@ def lambda_handler(event, context):
         # Run over your `instances_to_stop` list and stop each one of them
         try:
             for instance in instances_to_stop:
-                instance.stop()
+                # instance.stop()
                 # print(instance.id)
                 if get_tags(instance):
                     print("The instances name to stop: ", get_tags(instance),
@@ -101,7 +101,7 @@ def lambda_handler(event, context):
 
 
 # This is for local testing don't remove
-# if __name__ == "__main__":
-#     event = []
-#     context = []
-#     lambda_handler(event, context)
+if __name__ == "__main__":
+    event = []
+    context = []
+    lambda_handler(event, context)
