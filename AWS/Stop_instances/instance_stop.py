@@ -75,8 +75,9 @@ def lambda_handler(event, context):
                     print("The spot instances without name that will not stop", spot_instance.id)
 
         # Filter from all instances the instance that are not in the filtered list
-        instances_to_stop = [to_stop for to_stop in running_instances if to_stop.id not in [i.id for i in skip_instances]
-                             and to_stop not in [i.id for i in spot_instances]]
+        instances_to_stop = [to_stop for to_stop in running_instances
+                             if to_stop.id not in [instance.id for instance in skip_instances]
+                             and to_stop.id not in [instance.id for instance in spot_instances]]
 
         # Run over your `instances_to_stop` list and stop each one of them
         try:
