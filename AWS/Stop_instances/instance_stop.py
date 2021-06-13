@@ -16,8 +16,6 @@ def get_tags(instances):
         if tag['Key'] == 'Name':
             instances_tags = tag['Value']
             return instances_tags
-        # else:
-        #     return instances.id
 
 
 def lambda_handler(event, context):
