@@ -1,8 +1,3 @@
-"""
-Before running this script install boto3
-curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-python3.9 get-pip.py
-"""
 import boto3
 
 # Define client connection
@@ -21,6 +16,8 @@ def get_tags(instances):
         if tag['Key'] == 'Name':
             instances_tags = tag['Value']
             return instances_tags
+        else:
+            return instances.id
 
 
 def lambda_handler(event, context):
@@ -53,19 +50,16 @@ def lambda_handler(event, context):
         if len(running_instances) > 0:
             print("The amount of running instances in this region is: ", len(running_instances), "\n")
 
-            # Get The amount of spot instances
-            if len(spot_instances) > 0:
-                print("The amount of running Spot instances is: ", len(spot_instances), "\n")
-
-            else:
-                print("No running spot instances in this region")
-
             # Get the amount instances with tag skip_shutdown
             if len(skip_instances) > 0:
                 print("The amount of running instances with tag skip_shutdown is: ", len(skip_instances), "\n")
 
             else:
                 print("No running instances with tag skip_shutdown in this region")
+
+        # Get The amount of spot instances
+        elif len(spot_instances) > 0:
+            print("The amount of running Spot instances is: ", len(spot_instances), "\n")
 
         else:
             print("No running instances in this region")
@@ -80,18 +74,18 @@ def lambda_handler(event, context):
                     print("The spot instances without name that will not stop", spot_instance.id)
 
         # Filter from all instances the instance that are not in the filtered list
-        instances_to_stop = [to_stop for to_stop in running_instances if to_stop.id not in [i.id for i in skip_instances] and [i.id for i in spot_instances]]
+        instances_to_stop = [to_stop for to_stop in running_instances if to_stop.id not in [i.id for i in skip_instances] and to_stop not in [i.id for i in spot_instances]]
 
         # Run over your `instances_to_stop` list and stop each one of them
         try:
             for instance in instances_to_stop:
+                instance.stop()
+                # print(instance.id)
                 if get_tags(instance):
                     print("The instances name to stop: ", get_tags(instance), " instance id: ", instance.id, "\n")
 
                 elif not get_tags(instance):
                     print("The instances without name that will stop", instance.id)
-
-                instance.stop()
 
         except Exception as e:
             print("You cant stop spot instances")
