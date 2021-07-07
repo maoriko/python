@@ -4,7 +4,7 @@ FROM alpine
 # Ignore to update version here, it is controlled by .travis.yml and build.sh
 # docker build --no-cache --build-arg KUBECTL_VERSION=${tag} --build-arg HELM_VERSION=${helm} --build-arg KUSTOMIZE_VERSION=${kustomize_version} -t ${image}:${tag} .
 ARG HELM_VERSION=3.2.1
-ARG KUBECTL_VERSION=1.17.5
+ARG KUBECTL_VERSION=1.21.2
 ARG KUSTOMIZE_VERSION=v3.8.1
 ARG KUBESEAL_VERSION=v0.15.0
 
