@@ -3,7 +3,7 @@ import boto3
 # Define client connection
 ec2c = boto3.client('ec2')
 
-# Define ressources connection
+# Define resources connection
 ec2r = boto3.resource('ec2')
 
 # Get list of regions
@@ -66,28 +66,24 @@ def lambda_handler(event, context):
         if len(spot_instances) > 0:
             for spot_instance in spot_instances:
                 if get_tags(spot_instance):
-                    print("The spot instances name will not stop: ", get_tags(spot_instance),
-                          " spot instance id: ", spot_instance.id, "\n")
+                    print("The spot instances name will not stop: ", get_tags(spot_instance), " spot instance id: ", spot_instance.id, "\n")
 
                 elif not get_tags(spot_instance):
                     print("The spot instances without name that will not stop", spot_instance.id)
 
         # Filter from all instances the instance that are not in the filtered list
-        instances_to_stop = [to_stop for to_stop in running_instances
-                             if to_stop.id not in [instance.id for instance in skip_instances]
-                             and to_stop.id not in [instance.id for instance in spot_instances]]
+        instances_to_stop = [to_stop for to_stop in running_instances if to_stop.id not in [i.id for i in skip_instances] and to_stop not in [i.id for i in spot_instances]]
 
         # Run over your `instances_to_stop` list and stop each one of them
         try:
             for instance in instances_to_stop:
-                # instance.stop()
-                # print(instance.id)
                 if get_tags(instance):
-                    print("The instances name to stop: ", get_tags(instance),
-                          " instance id: ", instance.id, "\n")
+                    print("The instances name to stop: ", get_tags(instance), " instance id: ", instance.id, "\n")
 
                 elif not get_tags(instance):
                     print("The instances without name that will stop", instance.id)
+
+                instance.stop()
 
         except Exception as e:
             print("You cant stop spot instances")
@@ -99,7 +95,7 @@ def lambda_handler(event, context):
 
 
 # This is for local testing don't remove
-if __name__ == "__main__":
-    event = []
-    context = []
-    lambda_handler(event, context)
+# if __name__ == "__main__":
+#     event = []
+#     context = []
+#     lambda_handler(event, context)
