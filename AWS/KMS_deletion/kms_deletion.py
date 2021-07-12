@@ -54,8 +54,8 @@ def lambda_handler(event, context):
         print("Region %s " % region['RegionName'])
         print("===========================================\n")
         reg = region['RegionName']
-        
-        return_marker(key_description, reg)
+
+        delete_kms_keys(key_description, reg)
 
 
 if __name__ == "__main__":
