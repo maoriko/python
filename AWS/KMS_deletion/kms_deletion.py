@@ -1,7 +1,4 @@
 import boto3
-import logging
-from botocore.exceptions import ClientError
-from collections import Counter
 
 # Define client connection
 ec2c = boto3.client('ec2')
@@ -13,8 +10,7 @@ regionslist = ec2c.describe_regions().get('Regions', [])
 key_description = '<YourDescriptionOfKey>>'
 
 
-def return_marker(desc, reg):
-
+def delete_kms_keys(desc, reg):
     kms_client = boto3.client('kms', region_name=reg)
     match_state = "Enabled"
     pending_state = "PendingDeletion"
@@ -22,17 +18,18 @@ def return_marker(desc, reg):
     marker = None
     while True:
         paginator = kms_client.get_paginator('list_keys')
-        response_iterator = paginator.paginate(PaginationConfig={'MaxItems': 10000, 'StartingToken': marker})
+        response_iterator = paginator.paginate(PaginationConfig={'MaxItems': 100, 'StartingToken': marker})
 
         for cmk in response_iterator:
-            key = cmk['Keys']
-            for k in key:
-                key_info = kms_client.describe_key(KeyId=k['KeyArn'])
-                key_id = key_info['KeyMetadata']['KeyId']
-                key_desc = key_info['KeyMetadata']['Description']
-                key_state = (key_info['KeyMetadata']['KeyState'])
-                marker = cmk['Truncated']
-                while marker is True:
+            keys = cmk['Keys']
+            marker = cmk['Truncated']
+
+            while marker is True:
+                for key in keys:
+                    key_info = kms_client.describe_key(KeyId=key['KeyArn'])
+                    key_id = key_info['KeyMetadata']['KeyId']
+                    key_desc = key_info['KeyMetadata']['Description']
+                    key_state = (key_info['KeyMetadata']['KeyState'])
                     try:
                         if match_state == key_state:
                             if key_desc == desc:
@@ -44,11 +41,12 @@ def return_marker(desc, reg):
 
                     except Exception as e:
                         print(e)
-                        exit(1)
                 else:
                     break
+            else:
+                break
 
-        return print("All keys were checked and the desired key was not found!")
+        return print("All keys were checked and no keys to delete!\n")
 
 
 def lambda_handler(event, context):
