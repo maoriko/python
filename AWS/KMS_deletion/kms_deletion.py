@@ -28,7 +28,7 @@ def delete_kms_keys(desc, reg):
                     key_id = key_info['KeyMetadata']['KeyId']
                     key_desc = key_info['KeyMetadata']['Description']
                     key_state = (key_info['KeyMetadata']['KeyState'])
-                    if match_state == key_state and key_desc == key_description:
+                    if match_state == key_state and key_desc == desc:
                         print("Deleting key: ", key_id)
                         kms_client.schedule_key_deletion(KeyId=key_id, PendingWindowInDays=7)
                         break
