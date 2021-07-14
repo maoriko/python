@@ -10,26 +10,6 @@ regionList = ec2c.describe_regions().get('Regions', [])
 key_description = '<KeyDescription>>'
 
 
-# define the countdown func.
-# def countdown(t):
-#
-#     while t:
-#         mins, secs = divmod(t, 60)
-#         timer = '{:02d}:{:02d}'.format(mins, secs)
-#         print(timer, end="\r")
-#         time.sleep(1)
-#         t -= 1
-#
-#     print('timeout for kms keys deletion to run')
-#
-#
-# # input time in seconds
-# t = input("Enter the time in seconds: ")
-#
-# # function call
-# countdown(int(t))
-
-
 def delete_kms_keys(desc, reg):
     kms_client = boto3.client('kms', region_name=reg)
     match_state = "Enabled"
