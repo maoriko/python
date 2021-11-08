@@ -1,6 +1,11 @@
 name: Re-run only failed jobs
 
-on: [deployment]
+on: 
+  deployment:
+  workflow_dispatch:
+    inputs:
+      task:
+        default: 'test_failed'
 
 jobs:
   fail:
