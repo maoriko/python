@@ -9,7 +9,6 @@ on:
 
 jobs:
   fail:
-    if: github.event.deployment.task == 'test_failed'
     runs-on: ubuntu-latest
     name: Red
     steps:
