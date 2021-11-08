@@ -1,11 +1,6 @@
 name: Re-run only failed jobs
 
-on: 
-  deployment:
-  workflow_dispatch:
-    inputs:
-      task:
-        default: 'test_failed'
+on: [pull_request]
 
 jobs:
   fail:
@@ -34,7 +29,7 @@ jobs:
         run: echo "Fly, you fools!" && exit 1
 
       - run: echo "::set-output name=run_result::success" > run_result
-      
+
   pass:
     runs-on: ubuntu-latest
     name: Green
@@ -61,4 +56,3 @@ jobs:
         run: echo "I'm alive!" && exit 0
 
       - run: echo "::set-output name=run_result::success" > run_result
-  
