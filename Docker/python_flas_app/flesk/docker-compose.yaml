@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  wev_service:
+    image: maor_web_app:1.0.1
+    network_mode: host
+    restart: always
+#    ports:
+#      - "5000:5000" 
