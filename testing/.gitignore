@@ -1,0 +1,7 @@
+#Ignore Terraform stuff
+.*.*.*.info
+*.tfstate*
+*.terraform.tfstate
+*.terraform
+*.tfvars
+*.terraform.lock.hcl
