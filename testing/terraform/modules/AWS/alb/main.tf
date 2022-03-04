@@ -45,42 +45,41 @@ resource "aws_security_group_rule" "instance-ssh-ingress" {
   description       = "access to instance host for alb"
   security_group_id = aws_security_group.instance-sg.id
   cidr_blocks       = [var.cidr_source_ip]
-  type      = "ingress"
-  from_port = "22"
-  to_port   = "22"
-  protocol  = "tcp"
+  type              = "ingress"
+  from_port         = "22"
+  to_port           = "22"
+  protocol          = "tcp"
 }
 
 resource "aws_security_group_rule" "instance-2-alb-ingress" {
-  description       = "Access to instance from alb to all"
-  security_group_id = aws_security_group.instance-sg.id
+  description              = "Access to instance from alb to all"
+  security_group_id        = aws_security_group.instance-sg.id
   source_security_group_id = aws_security_group.alb-sg.id
-  type      = "ingress"
-  from_port = "0"
-  to_port   = "65535"
-  protocol  = "tcp"
+  type                     = "ingress"
+  from_port                = "0"
+  to_port                  = "65535"
+  protocol                 = "tcp"
 }
 
 resource "aws_security_group_rule" "alb-from-world" {
   description       = "Access to alb from all"
   security_group_id = aws_security_group.alb-sg.id
-  cidr_blocks = ["0.0.0.0/0"]
-  type      = "ingress"
-  from_port = "0"
-  to_port   = "65535"
-  protocol  = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  type              = "ingress"
+  from_port         = "0"
+  to_port           = "65535"
+  protocol          = "-1"
 }
 
 resource "aws_security_group_rule" "alb-2-world" {
   description       = "Access alb to all"
   security_group_id = aws_security_group.alb-sg.id
-  cidr_blocks = ["0.0.0.0/0"]
-  type        = "egress"
-  from_port   = "0"
-  to_port     = "65535"
-  protocol    = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  type              = "egress"
+  from_port         = "0"
+  to_port           = "65535"
+  protocol          = "-1"
 }
-
 
 data "template_file" "user-data" {
   template = file("${path.module}/../../../templates/instance_user_date.sh")
@@ -92,13 +91,13 @@ data "template_file" "user-data" {
 }
 
 resource "aws_launch_configuration" "instance-launch-configuration" {
-  name          = "${data.aws_region.current.name}-${var.environment}-${var.app_name}-launch-configuration-${formatdate("YYYY-MM-DD-HH-mm", timeadd(timestamp(), "24h"))}"
-  key_name      = var.key_name
-  image_id      = var.instance_ami
-  instance_type = var.instance_instance_type
-  user_data     = data.template_file.user-data.rendered
+  name                        = "${data.aws_region.current.name}-${var.environment}-${var.app_name}-launch-configuration-${formatdate("YYYY-MM-DD-HH-mm", timeadd(timestamp(), "24h"))}"
+  key_name                    = var.key_name
+  image_id                    = var.instance_ami
+  instance_type               = var.instance_instance_type
+  user_data                   = data.template_file.user-data.rendered
   associate_public_ip_address = true
-  security_groups = [aws_security_group.instance-sg.id]
+  security_groups             = [aws_security_group.instance-sg.id]
   root_block_device {
     delete_on_termination = true
     volume_size           = 30
@@ -109,12 +108,10 @@ resource "aws_launch_configuration" "instance-launch-configuration" {
   }
 }
 resource "aws_autoscaling_group" "instance-auto-scaling-group" {
-  name             = "${data.aws_region.current.name}-${var.environment}-${var.app_name}"
-  min_size         = 1
-  desired_capacity = 1
-  max_size         = 1
-  #  health_check_type         = "ELB"
-  #  health_check_grace_period = 600
+  name                 = "${data.aws_region.current.name}-${var.environment}-${var.app_name}"
+  min_size             = 1
+  desired_capacity     = 1
+  max_size             = 1
   launch_configuration = aws_launch_configuration.instance-launch-configuration.name
   vpc_zone_identifier  = [for k, subnet in var.public_subnet : subnet.id]
   tag {
@@ -134,20 +131,18 @@ resource "aws_autoscaling_group" "instance-auto-scaling-group" {
 
 data "aws_instances" "instance-data" {
   instance_tags = {
-    Name = "${data.aws_region.current.name}-${var.environment}-${var.app_name}-instance"
+    Name     = "${data.aws_region.current.name}-${var.environment}-${var.app_name}-instance"
     image_id = var.instance_ami
   }
   depends_on = [aws_autoscaling_group.instance-auto-scaling-group]
 }
 
 resource "aws_lb" "app-alb" {
-  name               = "${data.aws_region.current.name}-${var.environment}-${var.app_name}-alb"
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.alb-sg.id]
-  subnets            = [for subnet in var.public_subnet : subnet.id]
-  
-  
+  name                       = "${data.aws_region.current.name}-${var.environment}-${var.app_name}-alb"
+  internal                   = false
+  load_balancer_type         = "application"
+  security_groups            = [aws_security_group.alb-sg.id]
+  subnets                    = [for subnet in var.public_subnet : subnet.id]
   enable_deletion_protection = false
   tags = {
     Environment = var.environment
@@ -157,46 +152,32 @@ resource "aws_lb" "app-alb" {
 }
 
 resource "aws_lb_target_group" "app-alb-target-group" {
-  name     = "${var.app_name}-target-group"
+  name     = "${data.aws_region.current.name}-${var.environment}-${var.app_name}-tg"
   port     = 5000
   protocol = "HTTP"
   vpc_id   = var.vpc_id
   health_check {
-    healthy_threshold = 5
-    interval = 10
-    path = "/"
-    port = "5000"
-    protocol = "HTTP"
-#    timeout = 60
+    healthy_threshold   = 5
+    interval            = 10
+    path                = "/"
+    port                = "5000"
+    protocol            = "HTTP"
     unhealthy_threshold = 3
   }
 }
 
 resource "aws_autoscaling_attachment" "asg-alb-attachment" {
   autoscaling_group_name = aws_autoscaling_group.instance-auto-scaling-group.name
-  lb_target_group_arn = aws_lb_target_group.app-alb-target-group.arn
+  lb_target_group_arn    = aws_lb_target_group.app-alb-target-group.arn
 }
 
-
 resource "aws_lb_listener" "app_alb_listener_http" {
-  load_balancer_arn    = aws_lb.app-alb.id
-  port                 = "5000"
-  protocol             = "HTTP"
-  
+  load_balancer_arn = aws_lb.app-alb.id
+  port              = "5000"
+  protocol          = "HTTP"
+
   default_action {
     target_group_arn = aws_lb_target_group.app-alb-target-group.id
     type             = "forward"
   }
 }
-
-#resource "aws_lb_listener_rule" "listener-rule" {
-#  listener_arn = aws_lb_listener.app_alb_listener_http.arn
-#  priority = 100
-#
-#  action {
-#    type             = "forward"
-#    target_group_arn = aws_lb_target_group.app-alb-target-group.arn
-#  }
-#
-#  condition {}
-#}

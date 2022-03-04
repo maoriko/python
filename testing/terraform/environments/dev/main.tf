@@ -31,13 +31,13 @@ module "vpc" {
 }
 
 module "alb" {
-  source        = "../../modules/AWS/alb"
-  vpc_id        = module.vpc.vpc_id
-  app_name      = var.app_name
-  key_name      = var.public_key_name
-  instance_ami  = var.instance_ami
-  environment   = var.environment
-  public_subnet = module.vpc.public_subnets
+  source         = "../../modules/AWS/alb"
+  vpc_id         = module.vpc.vpc_id
+  app_name       = var.app_name
+  key_name       = var.public_key_name
+  instance_ami   = var.instance_ami
+  environment    = var.environment
+  public_subnet  = module.vpc.public_subnets
   cidr_source_ip = local.cidr_source_ip
   providers = {
     aws = aws
