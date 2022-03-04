@@ -8,6 +8,9 @@ variable "vpc_id" {
 
 variable "public_subnet" {
   description = "The public subnets of the vpc"
+  type = map(object({
+    id = string
+  }))
 }
 
 variable "app_name" {
@@ -24,6 +27,10 @@ variable "instance_ami" {
 
 variable "instance_instance_type" {
   description = "The type of the instance, t2.micro, t2.medium..."
-  default = "t3.medium"
-  
+  default     = "t3.medium"
+
+}
+
+variable "cidr_source_ip" {
+  description = "Which ip can ssh to the machine app"
 }

@@ -1,6 +1,6 @@
-version: '3.8'
+version: '3.3'
 services:
-  wev_service:
+  web_service:
     image: maorpaz/flask_app:latest
     network_mode: host
     restart: always

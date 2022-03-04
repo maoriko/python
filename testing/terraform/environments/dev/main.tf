@@ -9,6 +9,7 @@ terraform {
 }
 
 locals {
+  cidr_source_ip = "0.0.0.0/0"
   availability_zones = [
     "${var.region}a",
     "${var.region}b"
@@ -17,33 +18,28 @@ locals {
 
 provider "aws" {
   profile = var.aws_profile
-  region = var.region
+  region  = var.region
 }
 
 module "vpc" {
-  source = "../../terraform/modules/AWS/vpc"
-  availability_zones = local.availability_zones
+  source             = "../../modules/AWS/vpc"
   environment        = var.environment
+  availability_zones = local.availability_zones
   providers = {
-    aws=aws
+    aws = aws
   }
 }
 
 module "alb" {
-  source = "../../terraform/modules/AWS/alb"
+  source        = "../../modules/AWS/alb"
+  vpc_id        = module.vpc.vpc_id
+  app_name      = var.app_name
+  key_name      = var.public_key_name
+  instance_ami  = var.instance_ami
   environment   = var.environment
   public_subnet = module.vpc.public_subnets
-  vpc_id        = module.vpc.vpc_id
-  app_name = ""
-  instance_ami = ""
-  key_name = var.public_key_name
-providers = {
-  aws=aws
+  cidr_source_ip = local.cidr_source_ip
+  providers = {
+    aws = aws
+  }
 }
-
-}
-
-
-
-
-

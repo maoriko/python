@@ -1,7 +1,11 @@
 import flask
 
-
 app = flask.Flask(__name__)
+
+
+@app.route("/")
+def general():
+    return "200"
 
 
 @app.route("/hello")
@@ -18,3 +22,4 @@ def index():
 @app.route("/health")
 def health():
     return "service is healthy"
+    

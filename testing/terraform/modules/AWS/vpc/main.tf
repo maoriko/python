@@ -62,7 +62,6 @@ resource "aws_subnet" "public-subnets" {
   availability_zone = each.key
   cidr_block        = each.value.public_subnet
   vpc_id            = aws_vpc.vpc.id
-  map_public_ip_on_launch = true
   tags = {
     Name  = "${data.aws_region.current.name}-${var.environment}-public-subnet-${each.key}"
     Environment = var.environment
@@ -97,4 +96,10 @@ resource "aws_route" "public-route" {
   route_table_id         = aws_route_table.public-route-table.id
   gateway_id             = aws_internet_gateway.vpc-gw.id
   destination_cidr_block = "0.0.0.0/0"
+}
+
+resource "aws_route_table_association" "public-subnet-rt-associations" {
+  for_each       = aws_subnet.public-subnets
+  subnet_id      = aws_subnet.public-subnets[each.key].id
+  route_table_id = aws_route_table.public-route-table.id
 }
