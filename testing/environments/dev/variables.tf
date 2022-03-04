@@ -18,7 +18,12 @@ variable "aws_profile" {
   type = string
 }
 
-variable "public_key" {
+variable "public_key_name" {
   description = "The public key to use to connect the ec2 instance"
+  type = string
+}
+
+variable "instance_ami" {
+  description = "The AMI of the instance"
   type = string
 }

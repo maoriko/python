@@ -19,6 +19,7 @@ Arguments:
 
 Optional:
   --public_key_name                 The name of public key on AWS
+  --instance_ami                    The AMI of AWS, Note, this based region, default for eu-west-3 is: ami-0c0f763628afa7f8b refer from here: https://cloud-images.ubuntu.com/locator/
 EOF
   exit 1
 }
@@ -51,6 +52,10 @@ function app_creation_handel_parameters() {
       ;;
     --public_key_name )
       public_key_name=$2
+      shift
+      ;;
+    --instance_ami )
+      instance_ami=$2
     esac
     shift
   done
@@ -70,6 +75,9 @@ function app_creation_handel_parameters() {
   elif [ -z "${public_key_name}" ]; then
     public_key_name="maor_pub"
     echo "No public key chosen, using default $public_key_name"
+  elif [ -z "${instance_ami}" ]; then
+    instance_ami="ami-0c0f763628afa7f8b"
+    echo "No instance_ami chosen, using default $instance_ami"
   fi
 }
 
@@ -81,6 +89,9 @@ if [[ ! $(echo $region_list | grep -w "$region") ]]; then
   printf "Region: $region not valid,\n\nOptions available:\n\n$region_list" && die
 fi
 
+if [[ ! "${instance_ami}" && $(echo $region) == "eu-west-3" ]]; then
+  echo "The AMI only suits to eu-west-3!"
+
 # ---------- Apply Terraform ----------
 dir_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 pushd "${dir_path}/../environments/$environment" || die "failed to pushd to ${dir_path}/../environments/$environment"
@@ -91,5 +102,6 @@ terraform destroy \
   -var region="${region}" \
   -var environment="${environment}" \
   -var aws_profile="${aws_profile}" \
-  -var public_key="${public_key_name}"
+  -var public_key_name="${public_key_name}" \
+  -var instance_ami="${instance_ami}"
 popd

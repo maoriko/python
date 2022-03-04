@@ -29,15 +29,19 @@ module "vpc" {
   }
 }
 
-#module "alb" {
-#  source = "../../terraform/modules/AWS/alb"
-#  environment   = var.environment
-#  public_subnet = module.vpc.public_subnets
-#  vpc_id        = module.vpc.vpc_id
-#providers = {
-#  aws=aws
-#}
-#}
+module "alb" {
+  source = "../../terraform/modules/AWS/alb"
+  environment   = var.environment
+  public_subnet = module.vpc.public_subnets
+  vpc_id        = module.vpc.vpc_id
+  app_name = ""
+  instance_ami = ""
+  key_name = var.public_key_name
+providers = {
+  aws=aws
+}
+
+}
 
 
 
