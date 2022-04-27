@@ -17,5 +17,8 @@ COPY ./flask_server/flask_web_server.py /app/
 FROM base as prod
 
 RUN apk update
+RUN apk add busybox-extras
+RUN apk add curl
+
 
 CMD flask run -h 0.0.0.0 -p 5000
