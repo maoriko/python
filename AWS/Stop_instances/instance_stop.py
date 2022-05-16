@@ -3,9 +3,6 @@ import boto3
 # Define client connection
 ec2c = boto3.client('ec2')
 
-# Define resources connection
-ec2r = boto3.resource('ec2')
-
 # Get list of regions
 regionList = ec2c.describe_regions().get('Regions', [])
 

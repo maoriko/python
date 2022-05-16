@@ -13,6 +13,9 @@ RUN pip install -r requirements.txt
 
 COPY ./flask_server/flask_web_server.py /app/
 
+
+COPY vault_connection_test.py /app/vault_connection_test.py
+
 ################### START NEW IMAGE: PRODUCTION ###################
 FROM base as prod
 
