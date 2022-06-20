@@ -13,6 +13,11 @@ RUN pip install -r requirements.txt
 
 COPY ./flask_server/flask_web_server.py /app/
 
+#For Logs
+VOLUME /var/log/flask
+
+#For ConfigMap
+VOLUME /etc/flask
 
 COPY vault_connection_test.py /app/vault_connection_test.py
 

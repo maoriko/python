@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: flask-app
+  labels:
+    app: flask
+spec:
+  containers:
+    - name: flask-app
+      image: docker.io/maorpaz/flask_app:v1.0.1
+      imagePullPolicy: Always
+      ports:
+        - name: http
+          containerPort: 5000
+          protocol: TCP
