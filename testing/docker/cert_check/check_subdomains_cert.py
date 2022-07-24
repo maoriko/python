@@ -1,16 +1,23 @@
-import ssl, socket
-import datetime, requests, boto3, os, json, sys
+import boto3
+import datetime
+import json
+import os
+import requests
+import socket
+import ssl
+import sys
 
 access_key = os.environ.get("ACCESS_KEY_ID")
 secret_key = os.environ.get("SECRET_ACCESS_KEY")
-r53_zone_id = os.environ.get("HOSTED_ZONE_ID")
+# r53_zone_id = os.environ.get("HOSTED_ZONE_ID")
+r53_zone_id = "Z9DC2VSSE1HT0"
 exp_limit = 25
 
 
 def get_route53_records(zone_id):
-    client = boto3.client('route53',
-                          aws_access_key_id=access_key,
-                          aws_secret_access_key=secret_key
+    client = boto3.client('route53'
+                          # aws_access_key_id=access_key,
+                          # aws_secret_access_key=secret_key
                           )
 
     response = client.list_resource_record_sets(
@@ -41,15 +48,15 @@ def sort_subdomains(subdomains):
 
     for subdomain in subdomains_list:
         subdomain = subdomain[:-1]
-        if "mq" in subdomain:
-            sorted_list.append({'hostname': subdomain, 'port': 5671})
-        elif "zt.wmt" in subdomain:
+        if "logs" in subdomain:
+            sorted_list.append({'hostname': subdomain, 'port': 13100})
+        elif "prom" in subdomain:
             sorted_list.append({'hostname': subdomain, 'port': 9300})
-        elif "zt" in subdomain:
+        elif "logger" in subdomain:
             sorted_list.append({'hostname': subdomain, 'port': 9900})
-        elif "splunk" in subdomain:
+        elif "logging" in subdomain:
             sorted_list.append({'hostname': subdomain, 'port': 9443})
-        elif "restore" in subdomain or "log." in subdomain:
+        elif "some_other" in subdomain or "log." in subdomain:
             pass
         else:
             sorted_list.append({'hostname': subdomain, 'port': 443})
@@ -122,12 +129,13 @@ def lambda_handler(event, context):
             if exp_days.days < exp_limit:
                 notification = f"WARNING: {subdomain['hostname']} certificate is about to expire in: {exp_days.days} days!"
                 print(notification)
-                send_slack_notification(notification)
+                # send_slack_notification(notification)
             else:
                 print(f"[*] {subdomain['hostname']} certificate will be expired in: {exp_days.days} days")
 
+
 # This is for local testing don't remove
-# if __name__ == "__main__":
-#     event = []
-#     context = []
-#     lambda_handler(event, context)
+if __name__ == "__main__":
+    event = []
+    context = []
+    lambda_handler(event, context)
