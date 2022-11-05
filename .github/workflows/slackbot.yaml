@@ -1,8 +1,11 @@
 name: Configuration Check
+
 on:
+  deployment:
   repository_dispatch:
     types:
       - configuration-check
+
 jobs:
   check:
     name: Run check

@@ -5,3 +5,10 @@
 *.terraform
 *.tfvars
 *.terraform.lock.hcl
+
+# Ignoore venv of python
+**/venv/**
+
+# Ignore intelij stuff
+**/.idea/**
+**../.idea/**

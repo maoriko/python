@@ -1,8 +1,7 @@
 FROM python:3.9.10-alpine3.15 as base
 
-
-
 ENV SLACK_BOT_TOKEN=""
+ENV GITHUB_REPO_TOKEN=""
 
 ARG PORT
 ENV PORT=${PORT}
@@ -21,23 +20,23 @@ WORKDIR /app/
 COPY requirements.txt /app/requirements.txt
 RUN pip install -r requirements.txt
 
-COPY ./slack_bot_app/slackbot.py /app/
+COPY slack_bot_app/slackbot/slackbot.py /app/
 
 #For Logs
-#VOLUME /var/log/flask
-#
-##For ConfigMap
-#VOLUME /etc/flask
+VOLUME /var/log/flask
+
+#For ConfigMap
+VOLUME /etc/flask
 
 ################### START NEW IMAGE: PRODUCTION ###################
 FROM base as prod
 
-RUN apk update
-RUN apk add busybox-extras
-RUN apk add curl
+#RUN apk update
+#RUN apk add busybox-extras
+#RUN apk add curl
 
 
-CMD ["slack_bot_app.py"]
+CMD ["slackbot.py"]
 ENTRYPOINT ["python3"]
 
-# doocker run -it -v ${PWD}:app -w app /bin/sh
+# docker run -it -v ${PWD}:app -w app  slackbot:1.0.0 /bin/sh
