@@ -3,5 +3,7 @@ num2 = int(input("Please enter a number: "))
 
 if num2 > num1:
     print("The number:", num2, "is greater then 10")
+elif num2 == num1:
+    print("The number:", num2, "is equal to 10")
 else:
     print("the number:", num2, "is smaller then 10")

@@ -10,7 +10,7 @@ import sys
 access_key = os.environ.get("ACCESS_KEY_ID")
 secret_key = os.environ.get("SECRET_ACCESS_KEY")
 # r53_zone_id = os.environ.get("HOSTED_ZONE_ID")
-r53_zone_id = "Z9DC2VSSE1HT0"
+r53_zone_id = "Z0499371JP4TFHOJK2YB"
 exp_limit = 25
 
 

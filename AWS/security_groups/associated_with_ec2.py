@@ -22,7 +22,7 @@ ec2c = boto3.client('ec2')
 ec2r = boto3.resource('ec2')
 
 # Get list of regions
-regionslist = ec2c.describe_regions().get('Regions', [])
+regionList = ec2c.describe_regions().get('Regions', [])
 
 
 # Function to get tags from instances
@@ -38,7 +38,7 @@ def lambda_handler(event, context):
     result = []
 
     # Iterate over regions
-    for region in regionslist:
+    for region in regionList:
         print("Region %s " % region['RegionName'])
         print("===========================================\n")
         reg = region['RegionName']
