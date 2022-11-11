@@ -15,8 +15,6 @@ def get_tags(instances):
             return instances_tags
 
 
-import boto3
-
 # Define client connection
 ec2c = boto3.client('ec2')
 
