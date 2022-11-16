@@ -1,9 +1,4 @@
-import locale
-
 import boto3
-from lazyme.string import color_print
-
-import operator
 
 # Define client connection
 ec2_client = boto3.client('ec2')
@@ -13,7 +8,8 @@ regionList = ec2_client.describe_regions().get('Regions', [])
 in_use_volumes = []
 available_volumes = []
 vol_in_use = {"Name": "status", "Values": ["in-use"]}
-vol_available = {"Name": "status", "Values": ["available"]}
+all_volumes = {}
+volume_available = {"Name": "status", "Values": ["available"]}
 initial = 0
 
 
@@ -21,7 +17,7 @@ def get_volume_info(current_region):
     ec2 = boto3.resource('ec2', region_name=current_region)
     total = 0
 
-    for vol in ec2.volumes.filter(Filters=[vol_in_use]):
+    for vol in ec2.volumes.filter(Filters=[all_volumes]):
         volume = vol.id
         volume_id = ec2.Volume(vol.id)
         volume_size = volume_id.size
@@ -46,7 +42,7 @@ def get_volume_info(current_region):
 def delete_unused_volumes(current_region):
     ec2 = boto3.resource('ec2', region_name=current_region)
 
-    for vol in ec2.volumes.filter(Filters=[vol_available]):
+    for vol in ec2.volumes.filter(Filters=[volume_available]):
         volume = vol.id
         volume_id = ec2.Volume(vol.id)
         volume_size = volume_id.size
@@ -61,17 +57,17 @@ def delete_unused_volumes(current_region):
             break
         else:
             print(f'Volume_id {volume} Volume_type {volume_type} ({volume_size} GiB) Volume encrypted {volume_encryption} -> {volume_state}')
-            # volume.delete()
+            volume_id.delete()
 
 
-# get_volume_info("us-east-1")
+delete_unused_volumes("eu-west-1")
 
-for region in regionList:
-    print("Region %s " % region['RegionName'])
-    print("===========================================\n")
-    reg = region['RegionName']
-    # Call EC2 deletion process
-    get_volume_info(reg)
-    print("===========================================\n")
-    continue
-print('Done.')
+# for region in regionList:
+#     print("Region %s " % region['RegionName'])
+#     print("===========================================\n")
+#     reg = region['RegionName']
+#     # Call EC2 deletion process
+#     get_volume_info(reg)
+#     print("===========================================\n")
+#     continue
+# print('Done.')
