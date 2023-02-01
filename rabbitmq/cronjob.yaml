@@ -1,0 +1,21 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: rabbitmq-message-checker
+spec:
+  schedule: "0 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: rabbitmq-message-checker
+              image: rabbitmq-message-checker:latest
+              env:
+                - name: HOSTS
+                  value: "host1,host2,host3"
+                - name: QUEUE
+                  value: "queue_name"
+                - name: PAGERDUTY_SERVICE_KEY
+                  value: "your_pagerduty_service_key"
+          restartPolicy: OnFailure
