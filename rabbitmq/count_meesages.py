@@ -1,12 +1,3 @@
-# import rabbitpy
-#
-# with rabbitpy.Connection('amqps://multiply-rapid-polecat:gjnR9SRJ7YpMWoWTNq87pw1S@b-6d608ba4-94db-495c-b8c9'
-#                          '-81bf3d9dcc05.mq.us-east-1.amazonaws.com:5671') as conn:
-#     with conn.channel() as channel:
-#         queue = rabbitpy.Queue(channel, 'test')
-#         print('The queue has {0} messages'.format(len(queue)))
-
-
 import pika
 import os
 import requests
@@ -18,6 +9,7 @@ logging.basicConfig(filename="rabbitmq_message_checker.log", level=logging.INFO,
 
 # set up PagerDuty API endpoint
 PAGERDUTY_API_URL = "https://events.pagerduty.com/v2/enqueue"
+
 
 def trigger_pagerduty(service_key, event_type, description, client, client_url):
     payload = {
@@ -42,22 +34,13 @@ def trigger_pagerduty(service_key, event_type, description, client, client_url):
         logging.error("Failed to create PagerDuty incident")
 
 
-# def check_messages_in_all_queue(host):
-#     try:
-#         logging.info(f"Connecting to RabbitMQ instance '{host}'...")
-#         connection = pika.BlockingConnection(pika.ConnectionParameters(host))
-#         channel = connection.channel()
-#         queues = channel.queue_declare(queue='', passive=True, durable=True, exclusive=False, auto_delete=False)
-#
-#         for queue in queues:
-#             count = queue.message_count
-#             if count > 1000:
-#                 logging.warning(f"Queue '{queue.name}' has exceeded 1000 messages. Current count: {count}")
-#                 # send_slack_notification(host, queue.name, count)
-#             else:
-#                 logging.info(f"Queue '{queue.name}'")
-#                 # (f"Queue '{queue.name}' has exceeded 1000 messages. Current count: {count}")
-
+def get_rabbitmq_queues(host):
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=host))
+    channel = connection.channel()
+    queues = channel.queue_declare(passive=True)
+    queue_names = [queue.queue for queue in queues]
+    connection.close()
+    return queue_names
 
 
 def check_messages_in_queue(host, queue):
@@ -70,7 +53,7 @@ def check_messages_in_queue(host, queue):
             # trigger PagerDuty incident
             service_key = os.getenv("PAGERDUTY_SERVICE_KEY")
             client = "RabbitMQ"
-            client_url = f"https://{host}/queues/{queue}"
+            client_url = f"{host}/queues/{queue}"
             description = f"Queue {queue} on host {host} has exceeded 1000 messages"
             trigger_pagerduty(service_key, "trigger", description, client, client_url)
         logging.info(f"Host: {host}, Queue: {queue}, Messages: {message_count}")
@@ -78,10 +61,15 @@ def check_messages_in_queue(host, queue):
         logging.error(f"Failed to connect to host {host}")
 
 
-# hosts=
+def main():
+    # hosts = ["host1", "host2", "host3"]
+    hosts = os.getenv("HOSTS").split(",")
+    for host in hosts:
+        queue_names = get_rabbitmq_queues(host)
+        for queue_name in queue_names:
+            print(queue_name, host)
+            check_messages_in_queue(host, queue_name)
+
 # hosts = os.getenv("HOSTS").split(",")
-queue = os.getenv("QUEUE")
-
-
-# for host in hosts:
-#     check_messages_in_queue(host, queue)
+# hosts = ["host1", "host2", "host3"]
+# queue_name = "queue_name"
